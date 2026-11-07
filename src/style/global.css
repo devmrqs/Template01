@@ -1,0 +1,33 @@
+/* Fontes carregadas via <link> no index.html, não @import (evita FOUT) */
+
+:root {
+  /* altura da navbar fixa — fonte única para padding e altura do hero */
+  --nav-offset: clamp(5.25rem, 3.9rem + 4.2vw, 7.8125rem);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "DM Sans", sans-serif;
+}
+
+body {
+  background: #fffcf8;
+}
+
+#smooth-wrapper {
+  overflow: hidden;
+}
+
+/* sem ScrollSmoother (toque), quem rola é o body */
+#smooth-wrapper[data-smooth="off"] {
+  overflow: visible;
+}
+
+/* padding-top compensa a navbar fixa */
+#smooth-content {
+  overflow: visible;
+  width: 100%;
+  padding-top: var(--nav-offset);
+}

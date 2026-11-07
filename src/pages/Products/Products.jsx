@@ -1,0 +1,160 @@
+// Libraries
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Hooks
+import { useSvgTransition } from "../../components/SVG/useSvgTransition";
+
+// Components
+import Button from "../../components/Button/Button";
+import CategoryCarousel from "../../components/CategoryCarousel/CategoryCarousel";
+import Seals from "../../components/Seals/Seals.jsx";
+import CtaPartnership from "../../components/CtaPartnership/CtaPartnership.jsx";
+
+// CSS
+import styles from "./Products.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const Products = ({ isPage = false }) => {
+  const sectionRef = useRef(null);
+  const heroRef = useRef(null);
+  const statsRef = useRef(null);
+  const introRef = useRef(null);
+  const { transitionTo } = useSvgTransition();
+
+  useGSAP(
+    () => {
+      // Hero: label → título → texto de apoio → botão
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+        })
+        .from(`.${styles.textHero} .${styles.label}`, {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          ease: "power3.out",
+        })
+        .from(
+          `.${styles.textHero} h2`,
+          { opacity: 0, y: 40, duration: 0.6, ease: "power3.out" },
+          "-=0.35",
+        )
+        .from(
+          `.${styles.heroProducts} .${styles.labelTwo}`,
+          { opacity: 0, y: 30, duration: 0.5, ease: "power3.out" },
+          "-=0.3",
+        )
+        .from(
+          `.${styles.heroProducts} button`,
+          { opacity: 0, y: 25, duration: 0.5, ease: "power3.out" },
+          "-=0.3",
+        );
+
+      // StatsBar: números sobem em stagger
+      gsap.from(`.${styles.statItem}`, {
+        scrollTrigger: {
+          trigger: statsRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      // Intro do carrossel: label → título → texto de apoio
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: introRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        })
+        .from(`.${styles.introCarousel} .${styles.label}`, {
+          opacity: 0,
+          y: 25,
+          duration: 0.5,
+          ease: "power3.out",
+        })
+        .from(
+          `.${styles.introCarousel} h3`,
+          { opacity: 0, y: 30, duration: 0.5, ease: "power3.out" },
+          "-=0.3",
+        )
+        .from(
+          `.${styles.introCarousel} .${styles.labelTwo}`,
+          { opacity: 0, y: 20, duration: 0.4, ease: "power3.out" },
+          "-=0.25",
+        );
+    },
+    { scope: sectionRef },
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`${styles.products} ${isPage ? styles.productsPage : ""}`}
+    >
+      <div className={styles.heroProducts} ref={heroRef}>
+        <div className={styles.textHero}>
+          <p className={styles.label}>Apresente todos os seus</p>
+          <h2>Produtos</h2>
+        </div>
+        <p className={styles.labelTwo}>
+          Um catálogo fluido, simples e rápido de navegar, organizado por
+          categorias para o seu cliente encontrar o que procura em poucos
+          cliques.
+        </p>
+
+        <Button
+          label="Solicitar orçamento"
+          variant="primary"
+          icon="arrow"
+          size="small"
+          onClick={() => transitionTo("/seja-parceiro")}
+        />
+      </div>
+      <div className={styles.statsBar} ref={statsRef}>
+        <div className={styles.statItem}>
+          <strong>+100</strong>
+          <p>Produtos organizados</p>
+        </div>
+        <div className={styles.statItem}>
+          <strong>10</strong>
+          <p>Categorias navegáveis</p>
+        </div>
+        <div className={styles.statItem}>
+          <strong>1</strong>
+          <p>Clique para filtrar</p>
+        </div>
+        <div className={styles.statItem}>
+          <strong>100%</strong>
+          <p>Sob medida</p>
+        </div>
+      </div>
+      <div className={styles.introCarousel} ref={introRef}>
+        <p className={styles.label}>Exemplo de catálogo</p>
+        <h3>Explore por categoria</h3>
+        <p className={styles.labelTwo}>
+          ASSIM O SEU CLIENTE NAVEGA PELOS SEUS PRODUTOS
+        </p>
+      </div>
+      <CategoryCarousel />
+      <Seals />
+      {isPage && <CtaPartnership />}
+    </section>
+  );
+};
+
+export default Products;

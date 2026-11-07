@@ -1,0 +1,103 @@
+/* O hero ocupa exatamente o que sobra da viewport abaixo da navbar.
+   Duas consequências: a deixa de scroll ("Nossos produtos" + seta) nunca cai
+   fora da tela, e o pin do ScrollTrigger passa a durar 1 tela de scroll em
+   qualquer device — mesma experiência no celular e no monitor grande.
+   svh (e não vh) mantém a altura estável quando a barra de endereço do
+   celular aparece/some, evitando tranco no meio do pin. */
+.main {
+  min-height: calc(100vh - var(--nav-offset));
+  min-height: calc(100svh - var(--nav-offset));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.25rem;
+  user-select: none;
+  text-align: center;
+}
+
+/* absorve a sobra vertical e centra o conteúdo principal;
+   o .enddingPage fica ancorado no rodapé do hero */
+.heroContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Tipografia escala com a LARGURA (vw), sem os degraus dos breakpoints */
+.textA {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.75rem, 1.2rem + 1.75vw, 2.8125rem);
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: clamp(0.2rem, 0.7vh, 0.625rem);
+}
+
+.naturezaWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Espaçamento vertical escala com a ALTURA (vh): comprime sozinho em
+   notebook 768px sem precisar de breakpoint de largura */
+.textSlogan {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.25rem, 0.85rem + 1.3vw, 2.0625rem);
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: clamp(1.5rem, 8vh, 5.625rem);
+}
+
+.containerBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 20rem;
+}
+
+/* empilhados ocupam a largura toda: garante largura igual entre rótulos de
+   tamanhos diferentes */
+@media (max-width: 47.99rem) {
+  .containerBtn > button {
+    width: 100%;
+  }
+}
+
+.enddingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  padding-block: clamp(1rem, 3vh, 2rem) clamp(1rem, 3.5vh, 2.5rem);
+}
+
+.enddingPage p {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.9375rem, 0.85rem + 0.25vw, 1.0625rem);
+}
+
+.enddingPage img {
+  width: 1rem;
+  height: auto;
+}
+
+/* Único breakpoint que sobra: mudança de layout (coluna → linha),
+   que clamp() não resolve */
+@media (min-width: 48rem) {
+  .main {
+    padding: 0 2rem;
+  }
+
+  .containerBtn {
+    flex-direction: row;
+    gap: clamp(1.5rem, 1rem + 1.4vw, 2.1875rem);
+    max-width: none;
+  }
+}

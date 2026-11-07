@@ -1,0 +1,309 @@
+.productsPanel {
+  width: calc(100% - 140px);
+  height: 560px;
+  margin: 0 70px 70px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  background: #fffefa;
+  border: 1px solid rgba(93, 103, 60, 0.16);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(39, 43, 25, 0.08);
+  cursor: default;
+  user-select: none;
+}
+
+.categoryPreview {
+  height: 100%;
+  background: #5d673c;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-sizing: border-box;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 300px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.categoryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.previewContent {
+  color: #fffefa;
+  overflow: hidden;
+}
+
+.previewContent h3 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.previewContent p {
+  margin: 0;
+  max-width: 280px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 254, 250, 0.78);
+  display: -webkit-box;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(93, 103, 60, 0.7);
+}
+
+.categoryPreview .label {
+  color: rgba(255, 254, 250, 0.65);
+}
+
+.productsContent {
+  height: 100%;
+  min-width: 0;
+  padding: 42px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(130, 141, 93, 0.12),
+      transparent 34%
+    ),
+    linear-gradient(145deg, #f7f6f2 20%, #fcf9f5 100%);
+}
+
+.productsHeader {
+  margin-bottom: 30px;
+  flex-shrink: 0;
+}
+
+.productsHeader h4 {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.25rem);
+  font-weight: 500;
+  color: #333725;
+}
+
+.productsHeader p {
+  margin: 0;
+  color: rgba(46, 48, 39, 0.68);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.productsScroll {
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 18px;
+  cursor: grab;
+}
+
+.productsScroll:active {
+  cursor: grabbing;
+}
+
+.productsGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-auto-flow: column;
+  /* 6 linhas não cabem na altura que o painel tem no celular */
+  grid-template-rows: repeat(3, auto);
+  grid-auto-columns: minmax(9rem, 13.75rem);
+  column-gap: clamp(1.25rem, 2.2vw, 2.125rem);
+  row-gap: clamp(0.625rem, 1.2vw, 1.25rem);
+  width: max-content;
+  min-width: 100%;
+}
+
+@media (min-width: 48rem) {
+  .productsGrid {
+    grid-template-rows: repeat(6, auto);
+  }
+}
+
+.productItem {
+  padding-left: 18px;
+  position: relative;
+  color: #2e3027;
+  font-size: clamp(0.9375rem, 0.8rem + 0.55vw, 1.25rem);
+  line-height: 1.4;
+  transition: color 0.25s ease;
+  cursor: pointer;
+}
+
+.productItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #828d5d;
+}
+
+.productItem:hover {
+  color: #5d673c;
+}
+
+.productsScroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.productsScroll::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 100px;
+}
+
+.productsScroll::-webkit-scrollbar-thumb {
+  background: rgba(130, 141, 93, 0.45);
+  border-radius: 100px;
+}
+
+.productsScroll:hover::-webkit-scrollbar-thumb {
+  background: rgba(130, 141, 93, 0.85);
+}
+
+/* flex-shrink: 0 é obrigatório — sem ele o painel é espremido a zero antes
+   de expandir, e o JS mede a largura errada */
+.insideCard {
+  width: var(--panel-w, 39.375rem);
+  height: var(--card-h, 30rem);
+  flex-shrink: 0;
+  margin: 0;
+  margin-left: calc(var(--panel-overlap, 1.875rem) * -1);
+  display: block;
+  box-sizing: border-box;
+  border-radius: 0 20px 20px 0;
+  border: none;
+  box-shadow: -8px 0 20px rgba(39, 43, 25, 0.15);
+  background: #fffefa;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.insideCard .categoryPreview {
+  display: none;
+}
+
+/* ---- Variante "expanded": painel que abre abaixo do card no celular ---- */
+
+.expanded {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* o card logo acima já mostra imagem, nome e descrição da categoria */
+.expanded .categoryPreview {
+  display: none;
+}
+
+.expanded .productsContent {
+  height: auto;
+  padding: 1.25rem 1.25rem 1rem;
+  background: none;
+}
+
+.expanded .productsHeader {
+  margin-bottom: 0.75rem;
+  padding-right: 2.5rem;
+}
+
+.expanded .productsHeader h4 {
+  font-size: 1.25rem;
+}
+
+.expanded .productsHeader p {
+  font-size: 0.8125rem;
+}
+
+/* Lista vertical com teto de altura: a maioria das categorias cabe inteira,
+   e as maiores rolam aqui dentro. overscroll-behavior impede que, ao chegar
+   ao fim, o gesto continue rolando a pagina atras. A mascara avisa que ha
+   mais conteudo abaixo. */
+.expanded .productsScroll {
+  max-height: 45svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  cursor: default;
+  padding-bottom: 0;
+  mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+}
+
+.expanded .productsGrid {
+  grid-auto-flow: row;
+  grid-template-rows: none;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.expanded .productItem {
+  padding: 0.6875rem 0 0.6875rem 1.125rem;
+  border-bottom: 1px solid rgba(93, 103, 60, 0.12);
+}
+
+.expanded .productItem:last-child {
+  border-bottom: none;
+}
+
+.expanded .productItem::before {
+  top: 1.2em;
+}
+
+.insideCard .productsContent {
+  height: 100%;
+  padding: clamp(1.25rem, 2.5vw, 2.125rem) clamp(1.25rem, 2.6vw, 2.375rem)
+    clamp(1.25rem, 2.5vw, 2.125rem) clamp(2.5rem, 4.5vw, 4.25rem);
+}
+
+.insideCard .productsHeader {
+  margin-bottom: clamp(1rem, 2vw, 1.625rem);
+}
+
+.insideCard .productsHeader h4 {
+  font-size: clamp(1.375rem, 1rem + 1.2vw, 2.125rem);
+}
+
+.insideCard .productsHeader p {
+  max-width: 460px;
+}
+
+.insideCard .productsScroll {
+  flex: 1;
+}

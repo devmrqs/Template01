@@ -1,0 +1,21 @@
+.containerHeader {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 48rem) {
+  .containerHeader {
+    top: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .containerHeader {
+    top: 2.5rem;
+  }
+}

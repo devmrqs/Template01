@@ -1,0 +1,395 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  background: rgba(20, 22, 16, 0.75);
+  cursor: default;
+}
+
+.modal {
+  position: relative;
+  width: min(81.25rem, 100%);
+  max-height: 88vh;
+  max-height: 88svh;
+  background: #fffefa;
+  border-radius: clamp(1.125rem, 2.5vw, 1.75rem);
+  clip-path: inset(0 round clamp(1.125rem, 2.5vw, 1.75rem));
+
+  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.22);
+  user-select: none;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 32rem 1fr;
+  max-height: 88vh;
+  max-height: 88svh;
+}
+
+.closeButton {
+  position: absolute;
+  top: clamp(0.75rem, 2vw, 1.25rem);
+  right: clamp(0.75rem, 2vw, 1.25rem);
+  z-index: 10;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(93, 103, 60, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 254, 250, 0.85);
+  color: #333725;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.closeButton:hover {
+  background: #fffefa;
+  transform: rotate(90deg);
+}
+
+.gallery {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: #f2f1eb;
+}
+
+.imageStage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 21.25rem;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 26rem;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #fffefa;
+  box-shadow: 0 18px 40px rgba(39, 43, 25, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(46, 48, 39, 0.4);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+/* As duas <img> (camadas do crossfade) ficam empilhadas exatamente no
+   mesmo lugar dentro do .imageFrame — o GSAP controla qual está visível */
+.mainImageImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryBadge {
+  position: absolute;
+  top: clamp(0.75rem, 1.5vw, 1.125rem);
+  left: clamp(0.75rem, 1.5vw, 1.125rem);
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: rgba(20, 22, 16, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fffefa;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.thumbList {
+  display: flex;
+  gap: 10px;
+  padding: 0 0.125rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.thumbList::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  width: clamp(2.75rem, 2.4rem + 1.5vw, 3.75rem);
+  height: clamp(2.75rem, 2.4rem + 1.5vw, 3.75rem);
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 12px;
+  border: 1.5px solid rgba(93, 103, 60, 0.15);
+  background: #fffefa;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+  opacity: 0.7;
+}
+
+.thumb:hover {
+  opacity: 1;
+}
+
+.thumbActive {
+  border-color: #b5713f;
+  opacity: 1;
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  padding: clamp(1.5rem, 4vw, 2.75rem) clamp(1.25rem, 4.5vw, 3.25rem)
+    clamp(1.5rem, 3.5vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.875rem, 2vw, 1.25rem);
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.infoHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: clamp(0.875rem, 2vw, 1.25rem);
+  border-bottom: 1px solid rgba(93, 103, 60, 0.12);
+}
+
+.infoHeader .label {
+  color: #b5713f;
+}
+
+.info h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.25rem);
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
+  line-height: 1.1;
+}
+
+.shortDesc {
+  margin: 0;
+  font-size: clamp(0.9375rem, 0.88rem + 0.25vw, 1.0625rem);
+  font-weight: 300;
+  color: #333725;
+  line-height: 1.5;
+  max-width: 30rem;
+}
+
+.desc {
+  margin: 0;
+  font-size: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  font-weight: 300;
+  color: rgba(46, 48, 39, 0.65);
+  line-height: 1.7;
+  max-width: 32.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(93, 103, 60, 0.6);
+}
+
+.weightsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.weightsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* isolation: isolate garante que o z-index do fill/label não vaze pra fora
+   do botão; overflow: hidden mantém a mancha circular presa aos cantos
+   arredondados do card */
+.weightCard {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-width: 5.25rem;
+  padding: 14px 18px;
+  border: 1.5px solid rgba(93, 103, 60, 0.2);
+  border-radius: 14px;
+  background: transparent;
+  color: #333725;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.weightCard:hover {
+  border-color: #5d673c;
+}
+
+.weightCardActive {
+  border-color: #5d673c;
+}
+
+/* Camada de preenchimento: cobre o botão inteiro, mas fica recortada via
+   clip-path (controlado pelo GSAP) numa mancha circular que nasce no
+   ponto do clique — cor e texto ativo/inativo também são animados via
+   GSAP, não CSS, pra ficarem sincronizados com esse recorte */
+.weightCardFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #5d673c;
+  clip-path: circle(0px at 50% 50%);
+  pointer-events: none;
+  will-change: clip-path;
+}
+
+.weightCardLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 16px;
+  max-width: 31.25rem;
+  border: 1px solid rgba(93, 103, 60, 0.1);
+  overflow: hidden;
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 14px 18px;
+  background: rgba(93, 103, 60, 0.04);
+}
+
+.detailItem:not(:last-child) {
+  border-bottom: 1px solid rgba(93, 103, 60, 0.08);
+}
+
+.detailItem span {
+  font-size: 13px;
+  color: rgba(46, 48, 39, 0.5);
+  flex-shrink: 0;
+}
+
+.detailItem strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333725;
+  text-align: right;
+}
+
+.cta {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.navRow {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4px;
+}
+
+.navButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.navButton img {
+  width: 100%;
+  height: 100%;
+}
+
+.navButton:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* coluna única: o scroll passa da coluna de texto para o modal inteiro */
+@media (max-width: 63.99rem) {
+  .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gallery {
+    flex: none;
+    padding: 1.25rem 1.25rem 0;
+    background: transparent;
+  }
+
+  .imageStage {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    max-height: 40svh;
+  }
+
+  .info {
+    overflow-y: visible;
+  }
+
+  .navRow {
+    padding-top: 0.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .closeButton {
+    width: 2.375rem;
+    height: 2.375rem;
+  }
+
+  .navButton {
+    width: 1.875rem;
+    height: 1.875rem;
+  }
+}
